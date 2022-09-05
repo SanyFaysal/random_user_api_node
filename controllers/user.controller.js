@@ -42,3 +42,56 @@ module.exports.saveAnUser = (req, res) => {
     res.send(allUsers);
   });
 };
+
+module.exports.updateUser = (req, res) => {
+  const file = fs.readFileSync('user.json');
+  const users = JSON.parse(file);
+  const updateInfo = req.body;
+  const findUser = users.find((user) => user.id == updateInfo.id);
+  findUser.contact = updateInfo.contact;
+  const updatedUsers = JSON.stringify(users);
+  fs.writeFile('user.json', updatedUsers, (err) => {
+    // error checking
+    if (err) throw err;
+    console.log('New user added');
+    res.send('updated');
+  });
+};
+module.exports.updateMultipleUser = (req, res) => {
+  const file = fs.readFileSync('user.json');
+  const users = JSON.parse(file);
+  const multipleUserInfo = req.body;
+  users.map((user) => {
+    multipleUserInfo.map((info) => {
+      if (user.id == info.id) {
+        user.contact = info.contact;
+      }
+    });
+  });
+  const updatedUsers = JSON.stringify(users);
+  fs.writeFile('user.json', updatedUsers, (err) => {
+    // error checking
+    if (err) throw err;
+    console.log('New user added');
+    res.send('updated');
+  });
+};
+module.exports.deleteUser = (req, res) => {
+  const file = fs.readFileSync('user.json');
+  const users = JSON.parse(file);
+  const multipleUserInfo = req.body;
+  users.map((user) => {
+    multipleUserInfo.map((info) => {
+      if (user.id == info.id) {
+        user.contact = info.contact;
+      }
+    });
+  });
+  const updatedUsers = JSON.stringify(users);
+  fs.writeFile('user.json', updatedUsers, (err) => {
+    // error checking
+    if (err) throw err;
+    console.log('New user added');
+    res.send('updated');
+  });
+};
