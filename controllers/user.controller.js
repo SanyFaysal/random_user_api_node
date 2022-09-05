@@ -79,19 +79,13 @@ module.exports.updateMultipleUser = (req, res) => {
 module.exports.deleteUser = (req, res) => {
   const file = fs.readFileSync('user.json');
   const users = JSON.parse(file);
-  const multipleUserInfo = req.body;
-  users.map((user) => {
-    multipleUserInfo.map((info) => {
-      if (user.id == info.id) {
-        user.contact = info.contact;
-      }
-    });
-  });
-  const updatedUsers = JSON.stringify(users);
-  fs.writeFile('user.json', updatedUsers, (err) => {
+  const deletedID = req.body.id;
+  const rest = users.filter((user) => user.id != deletedID);
+  const restUsers = JSON.stringify(rest);
+  fs.writeFile('user.json', restUsers, (err) => {
     // error checking
     if (err) throw err;
     console.log('New user added');
-    res.send('updated');
+    res.send('User Deleted');
   });
 };
