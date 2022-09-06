@@ -11,13 +11,13 @@ app.use(cors());
 // app.use(errorHandler);
 app.use('/user', userRoute);
 
-app.all('*', (req, res) => {
-  res.send('No route found ');
-});
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
   res.json({
     text: 'Welcome to random api serve',
   });
+});
+app.all('*', (req, res) => {
+  res.send('No route found ');
 });
 app.listen(PORT, () => {
   console.log('example app listening port  ', PORT);
