@@ -5,11 +5,11 @@ module.exports.getRandomUser = (req, res) => {
   fs.readFile('user.json', (err, data) => {
     if (err) {
       res.write('Failed to read file ');
-      res.end();
+      res.status(404).end();
     } else {
       const randomUserString = data.toString();
       const randomUser = JSON.parse(randomUserString);
-      res.json(randomUser[randomNumber]);
+      res.status(200).json(randomUser[randomNumber]);
     }
   });
 };
@@ -21,14 +21,14 @@ module.exports.getAllUser = (req, res) => {
   fs.readFile('user.json', (err, data) => {
     if (err) {
       res.write('Failed to read file ');
-      res.end();
+      res.status(404).end();
     } else {
       const userString = data.toString();
       const users = JSON.parse(userString);
       if (limit && limit <= users.length) {
-        res.json(users.slice(0, limit));
+        res.status(200).json(users.slice(0, limit));
       } else {
-        res.send(users);
+        res.status(200).send(users);
       }
     }
   });
@@ -45,10 +45,12 @@ module.exports.saveAnUser = (req, res) => {
       // error checking
       if (err) throw err;
       console.log('New user added');
-      res.send(allUsers);
+      res.status(200).send(allUsers);
     });
   } else {
-    res.send('Please ensure all the properties for saving a new user');
+    res
+      .status(404)
+      .send('Please ensure all the properties for saving a new user');
   }
 };
 
@@ -67,7 +69,7 @@ module.exports.updateUser = (req, res) => {
       res.send('updated');
     });
   } else {
-    res.send('Please Provide an id of number !!!');
+    res.status(200).send('Please Provide an id of number !!!');
   }
 };
 module.exports.updateMultipleUser = (req, res) => {
@@ -88,10 +90,10 @@ module.exports.updateMultipleUser = (req, res) => {
       // error checking
       if (err) throw err;
       console.log('New user added');
-      res.send('updated');
+      res.status(200).send('updated');
     });
   } else {
-    res.send('Please provide a id of number ');
+    res.status(404).send('Please provide a id of number ');
   }
 };
 module.exports.deleteUser = (req, res) => {
@@ -105,9 +107,9 @@ module.exports.deleteUser = (req, res) => {
       // error checking
       if (err) throw err;
       console.log('New user added');
-      res.send('User Deleted');
+      res.status(200).send('User Deleted');
     });
   } else {
-    res.send('please provide a id of number');
+    res.status(403).send('please provide a id of number');
   }
 };
