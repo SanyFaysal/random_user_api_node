@@ -14,6 +14,11 @@ app.use('/user', userRoute);
 // app.all('*', (req, res) => {
 //   res.send('No route found ');
 // });
+app.get('/', (res, req) => {
+  res.json({
+    text: 'Welcome to random api serve',
+  });
+});
 app.listen(PORT, () => {
   console.log('example app listening port  ', PORT);
 });
