@@ -11,10 +11,10 @@ app.use(cors());
 // app.use(errorHandler);
 app.use('/user', userRoute);
 
-// app.all('*', (req, res) => {
-//   res.send('No route found ');
-// });
-app.get('/', (res, req) => {
+app.all('*', (req, res) => {
+  res.send('No route found ');
+});
+app.use('/', (req, res) => {
   res.json({
     text: 'Welcome to random api serve',
   });
